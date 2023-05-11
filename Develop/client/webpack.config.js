@@ -9,44 +9,58 @@ const { InjectManifest } = require('workbox-webpack-plugin');
 module.exports = () => {
   return {
     mode: 'development',
+    // entry point for files
     entry: {
       main: './src/js/index.js',
-      install: './src/js/install.js'
+      install: './src/js/install.js',
+      editor: './src/js/editor.js',
+      header: './src/js/header.js',
+      database: './src/js/database.js'
     },
+    // output for our bundles
     output: {
       filename: '[name].bundle.js',
       path: path.resolve(__dirname, 'dist'),
     },
     plugins: [
+      // Webpack plugin that generates our html file and injects our bundles
       new HtmlWebpackPlugin({
         template: './src/index.html',
         filename: 'index.html',
-        chunks: ['main']
+        title: 'JATE '
+        // chunks: ['main']
     }),
-      new HtmlWebpackPlugin({
-        template: './src/install.html',
-        filename: 'install.html',
-        chunks: ['install']
-      }),
-      new WebpackPwaManifest({
-        name: 'My PWA',
-        short_name: 'My PWA',
-        description: 'This is my Progressive Web App!',
-        start_url: '.',
-        background_color: '#ffffff',
-        theme_color: '#2196f3',
-        icons: [
-          {
-            src: path.resolve('src/assets/icon.png'),
-            sizes: [ 96, 128, 192, 256, 384, 512]
-          }
-        ]
+    
+
+      // Injects our custom service worker
+      new InjectManifest({
+        swSrc: './src-sw.js',
+        swDest: 'src-sw.js',
       }),
 
-      new InjectManifest({
-       swSrc: './src-sw.js',
-       swDest: 'sw.js', 
-      })
+
+      // Creates a manifest.json file.
+      new WebpackPwaManifest({
+        fingerprints: false,
+        inject: true,
+        name: 'Just Another Text Editor',
+        short_name: 'J.A.T.E',
+        description: 'Takes notes with JavaScript syntax highlighting!',
+        background_color: '#225ca3',
+        theme_color: '#225ca3',
+        start_url: './',
+        publicPath: './',
+        icons: [
+          {
+            src: path.resolve('src/images/logo.png'),
+            sizes: [96, 128, 192, 256, 384, 512],
+            destination: path.join('assets', 'icons'),
+          },
+        ],
+      }),
+
+
+      
       
     ],
 
@@ -56,19 +70,21 @@ module.exports = () => {
         // **added css loader rule to handle css files
         // **added babel loader rule to transpile js files
         {
-          test: /\.css$/,
-          use: ['style-loader', 'css-loader']
+          test: /\.css$/i,
+          use: ['style-loader', 'css-loader'],
         },
         {
-          test: /\.mjs$/,
-          exclude: /(node_modules|bower_components)/,
+          test: /\.m?js$/,
+          exclude: /node_modules/,
+          // We use babel-loader in order to use ES6.
           use: {
             loader: 'babel-loader',
             options: {
-              presets: [ '@babel/preset-env']
-            }
-          }
-        }
+              presets: ['@babel/preset-env'],
+              plugins: ['@babel/plugin-proposal-object-rest-spread', '@babel/transform-runtime'],
+            },
+          },
+        },
         
       ],
     },

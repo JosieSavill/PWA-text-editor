@@ -1,5 +1,7 @@
 import { openDB } from 'idb';
 
+
+
 const initdb = async () =>
   openDB('jate', 1, {
     upgrade(db) {
@@ -13,11 +15,14 @@ const initdb = async () =>
   });
 
 // Added logic to a method that accepts some content and adds it to the database
+
+
+
 export const putDb = async (content) => {
   const db = await initdb();
   const tx = db.transaction('jate', 'readwrite');
   const store = tx.objectStore('jate');
-  await store.put({ content });
+  await store.put({ content });A
   await tx.complete;
   console.log('Content added to database');
   console.error('putDb not implemented');
@@ -28,11 +33,12 @@ export const getDb = async () => {
   const db = await initdb();
   const tx = db.transaction('jate', 'readonly');
   const store = tx.objectStore('jate');
+  const id = await store.add({ content });
   const items = await store.getAll();
   await tx.complete;
   return items;
 };
 
-initdb();
 
-export { putDb, getDb };
+
+initdb();
