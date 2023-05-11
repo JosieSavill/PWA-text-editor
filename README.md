@@ -21,27 +21,20 @@
 
 
   
-
-
-  
+<br>
+<br>
+<br> 
 
 ## *Description*  
 <br>
+<br>
+
+PWA TEXT EDITOR is a way to create snippets of code or notes that are available to view whenever needed, offline as well as online.  
+
+PWA TEXT EDITOR uses an indexed database to get and store data.  
 
 
-
-PWA TEXT EDITOR is a way to create snippets of code or notes  
-that are available to view whenever needed, offline as well as online.  
-PWA TEXT EDITOR uses an indexed database to get and store data.   
-
-
-
-
-
-
-
-
-<br> 
+<br>
 <br>
 
 ## *Instructions*  
@@ -55,12 +48,6 @@ it's just that easy !!
 <br>
 <br>
 
- 
-
-
-
-![Desktop Img](/client/src/images/jatelogo.png) 
-
 
 
 ## *GitHub Repository*  
@@ -71,7 +58,13 @@ it's just that easy !!
 
 ## *Deployed Application URL on Heroku*
 
-[Link Here](https://josies-text-editor.herokuapp.com/)
+[Link Here](https://josies-text-editor.herokuapp.com/)  
+
+
+![DevTools Manifest Img](/client/src/images/manifest.png)   
+ 
+
+![DevTools Service Worker Img](/client/src/images/serviceworker.png) 
 
 
 
