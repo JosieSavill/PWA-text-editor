@@ -36,7 +36,7 @@ export const getDb = async () => {
   const id = await store.add({ content });
   const items = await store.getAll();
   await tx.complete;
-  return items;
+  return items.value;
 };
 
 
